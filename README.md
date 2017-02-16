@@ -1,2 +1,2 @@
-# phonetic-alphabet
-Converts any word to the phonetic alphabet
+# Nato Phonetic Alphabet Translator
+Converts any letter to the nato phonetic alphabet equivalent
