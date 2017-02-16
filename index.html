@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
+
+	<title>Phonetic Alphabet Translator</title>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+</head>
+<body ng-app="PhoneticAlphabet" ng-controller="mainController" ng-cloak>
+	<div class="jumbotron vertical-center">
+		<div class="container">
+			<div class="row">
+				<h1>NATO Phonetic Alphabet Translator</h1>
+			</div>
+			<div class="row">
+				<h4>Enter some text below and it will be translated into the NATO Phonetic Alphabet <a href="https://en.wikipedia.org/wiki/NATO_phonetic_alphabet" target="_blank"><span class="glyphicon glyphicon-new-window" aria-hidden="true"></span></a></h4>
+			</div>
+			<div class="row">
+				<div class="form-group">
+					<input type="text" class="form-control input-lg" id="usr" placeholder="Enter Text Here" ng-model="userInput" ng-change="inputListener()">
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group">
+					<textarea readonly="" class="form-control input-lg" rows="5" id="comment" ng-model="phoneticResult"></textarea>
+				</div>
+			</div>
+			<div class="row">
+				<button type="button" class="btn btn-danger center-block" ng-click="userInput = null; phoneticResult = null">Clear</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+
+	<!-- Your application bootstrap  -->
+	<script type="text/javascript">
+		var app = angular.module('PhoneticAlphabet', []);
+		app.controller('mainController', function ($scope) {
+			$scope.$watch('userInput', function() {
+				if($scope.userInput !== undefined && $scope.userInput !== null) {
+					getPhonetic($scope.userInput);
+				} else {
+					$scope.phoneticResult == null;
+				}
+			})
+
+			var alphabet=[["A","Alfa"],["B","Bravo"],["C","Charlie"],["D","Delta"],["E","Echo"],["F","Foxtrot"],["G","Golf"],["H","Hotel"],["I","India"],["J","Juliett"],["K","Kilo"],["L","Lima"],["M","Mike"],["N","November"],["O","Oscar"],["P","Papa"],["Q","Quebec"],["R","Romeo"],["S","Sierra"],["T","Tango"],["U","Uniform"],["V","Victor"],["W","Whiskey"],["X","Xray"],["Y","Yankee"],["Z","Zulu"],["1","One"],["2","Two"],["3","Three"],["4","Four"],["5","Five"],["6","Six"],["7","Seven"],["8","Eight"],["9","Nine"],["0","Zero"],[" ","[Space]"]];
+
+			function getPhonetic(entry) {
+				var phoneticTranslation = "";
+				var result;
+				for (var index=0, len=entry.length; index<len; index++) {
+					result ="";
+					for(var x=0, y=alphabet.length; x < y; x++) {
+						if(entry[index].toUpperCase() == alphabet[x][0]) {
+							result = alphabet[x][1];
+							break;
+						}
+					}
+					phoneticTranslation += result + " ";
+				}   
+				$scope.phoneticResult = phoneticTranslation
+			}
+		});
+
+
+	</script>
+
+</body>
+
+<style type="text/css">
+	.vertical-center {
+		min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+		min-height: 100vh; /* These two lines are counted as one :-)       */
+		display: flex;
+		align-items: center;
+		padding: 10px;
+	}
+
+}
+</style>
+</html>
